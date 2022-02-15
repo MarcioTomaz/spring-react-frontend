@@ -5,9 +5,9 @@ import NavBarItem from "./navbarItem";
 
 function NavBar() {
     return (
-        <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary" >
-            <div class="container">
-                <a href="https://bootswatch.com/" className="navbar-brand">Minhas Finanças</a>
+        <div className="navbar navbar-expand-lg fixed-top navbar-dark bg-primary" >
+            <div className="container">
+                <a href="#/home" className="navbar-brand">Minhas Finanças</a>
                 <button 
                     className="navbar-toggler" 
                     type="button" 
