@@ -14,7 +14,12 @@ export default props => {
                 <td>{lancamento.mes}</td>
                 <td>{lancamento.status}</td>
                 <td>
-
+                    <button type="button" 
+                            className="btn btn-success"
+                            onClick={e => props.editAction(lancamento.id)}>Editar</button>
+                    <button type="button" 
+                            className="btn btn-danger" 
+                            onClick={e =>  props.deleteAction(lancamento)}>Deletar</button>
                 </td>
             </tr>
         )
