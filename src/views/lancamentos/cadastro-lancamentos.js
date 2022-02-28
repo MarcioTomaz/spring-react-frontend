@@ -57,6 +57,15 @@ class CadastroLancamentos extends React.Component {
         const { descricao, valor, mes, ano, tipo } = this.state; //operador destructuring
         const lancamento = { descricao, valor, mes, ano, tipo, usuario: usuarioLogado.id };
 
+        try{
+            this.service.validar(lancamento)
+
+        }catch( erro ){
+            const mensagens = erro.mensagens;
+            mensagens.forEach( msg => messages.mensagemErro(msg) )
+            return false;
+        }     
+
         this.service
             .salvar(lancamento)
             .then(response => {
@@ -196,6 +205,7 @@ class CadastroLancamentos extends React.Component {
                                     <button onClick={this.atualizar} className="btn btn-success">Atualizar</button>
 
                                 ) : (
+
                                     <button onClick={this.submit} className="btn btn-success">Salvar</button>
 
 

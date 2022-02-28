@@ -1,27 +1,59 @@
 
 import ApiService from "../apiservice";
 
-class UsuarioService extends ApiService{
+import ErroValidacao from "../../main/exception/errovalidacao";
 
-    constructor(){
+class UsuarioService extends ApiService {
+
+    constructor() {
         super('/api/usuarios')
     }
 
-    autenticar(credenciais){
-        
-        const item =  this.post('/autenticar', credenciais);
+    autenticar(credenciais) {
 
-        return item; 
+        const item = this.post('/autenticar', credenciais);
+
+        return item;
     }
 
-    obterSaldoPorUsuario(id){
+    obterSaldoPorUsuario(id) {
 
         return this.get(`/${id}/saldo`)
     }
 
-    salvar(usuario){
-        
+    salvar(usuario) {
+
         return this.post('/', usuario);
+    }
+
+    validar(usuario) {
+
+        const erros = [];
+
+        if (!usuario.nome) {
+            erros.push('O campo Nome é obrigatório.')
+        }
+
+        if (!usuario.email) {
+
+            erros.push('O campo Email é obrigatório.')
+        } else if (!usuario.email.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+).(\.[a-z]{2,3})$')) {
+            erros.push("Informe um Email válido")
+        }
+
+        if (!usuario.senha || !usuario.senhaRepeticao) {
+
+            erros.push('Digite a senha 2 vezes.');
+
+        } else if (usuario.senha !== usuario.senhaRepeticao) {
+
+            erros.push('As senhas não batem.');
+        }
+
+        if( erros && erros.length > 0 ){
+            throw new ErroValidacao(erros);
+        }
+
     }
 }
 
